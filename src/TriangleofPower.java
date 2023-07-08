@@ -1,15 +1,46 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-@SuppressWarnings("serial")
 class ToP extends JPanel{
+
+public static boolean isNumeric(String strNum) {
+    if (strNum == null) {
+        return false;
+    }
+    try {
+        double d = Double.parseDouble(strNum);
+		strNum = strNum+d;
+    } catch (NumberFormatException nfe) {
+        return false;
+    }
+	
+    return true;
+}	
+
+public static boolean isInteger(double d) {
+	return (d % 1) == 0;
+}
 
 public class XListener implements ActionListener{
    public void actionPerformed(ActionEvent e){
-	     double y = Double.parseDouble(yTF.getText());
+		if(isNumeric(yTF.getText()) && isNumeric(zTF.getText())){
+ 	     double y = Double.parseDouble(yTF.getText());
 	     double z = Double.parseDouble(zTF.getText());
 	     double sol = Math.pow(z, 1.0 / y);
-	     solLB.setText(" X is "+sol);
+		if(isInteger(sol)){
+		xTF.setText(""+(int)sol);
+		if(isInteger(y) && isInteger(z)){
+	    solLB.setText(" X is "+(int)sol+", all sides are Integers");
+		}else{
+	    solLB.setText(" X is "+(int)sol);
+		}
+		}else{
+	    solLB.setText(" X is "+sol);
+		xTF.setText(""+sol);
+		} 
+		}else{
+	    solLB.setText("Invalid Input");
+		}		 
    }
 }
 
@@ -18,11 +49,26 @@ public class XListener implements ActionListener{
 
 
 public class YListener implements ActionListener{
-   public void actionPerformed(ActionEvent e){ 	
-	   	 double x = Double.parseDouble(xTF.getText());
-	     double z = Double.parseDouble(zTF.getText());
-	     double sol = Math.log(z) / Math.log(x); 
-	     solLB.setText(" Y is "+sol);
+   public void actionPerformed(ActionEvent e){
+		if(isNumeric(xTF.getText()) && isNumeric(zTF.getText())){
+	   	double x = Double.parseDouble(xTF.getText());
+	    double z = Double.parseDouble(zTF.getText());
+	    double sol = Math.log(z) / Math.log(x);
+		if(isInteger(sol)){
+		yTF.setText(""+(int)sol);
+		if(isInteger(x) && isInteger(z)){
+	    solLB.setText(" Y is "+(int)sol+", all sides are Integers");
+		}else{
+	    solLB.setText(" Y is "+(int)sol);
+		}
+		}else{
+	    solLB.setText(" Y is "+sol);
+		yTF.setText(""+sol);
+		} 
+		}else{
+	    solLB.setText("Invalid Input");
+		} 	
+
 
    }
 }
@@ -32,10 +78,24 @@ public class YListener implements ActionListener{
 
 public class ZListener implements ActionListener{
    public void actionPerformed(ActionEvent e){ 	
-	   	 double x = Double.parseDouble(xTF.getText());
+		if(isNumeric(xTF.getText()) && isNumeric(yTF.getText())){
+ 	   	 double x = Double.parseDouble(xTF.getText());
 	     double y = Double.parseDouble(yTF.getText());
 	     double sol = Math.pow(x, y);
-	     solLB.setText(" Z is "+sol);
+		if(isInteger(sol)){
+		zTF.setText(""+(int)sol);
+		if(isInteger(x) && isInteger(y)){
+	    solLB.setText(" Z is "+(int)sol+", all sides are Integers");
+		}else{
+	    solLB.setText(" Z is "+(int)sol);
+		}
+		}else{
+	    solLB.setText(" Z is "+sol);
+		zTF.setText(""+sol);
+		} 
+		}else{
+	    solLB.setText("Invalid Input");
+		} 		 
 
    }
 }
@@ -92,7 +152,6 @@ public void add(Component c, int x, int y, int w, int h){
 
 }
 
-@SuppressWarnings("serial")
 public class TriangleofPower extends JFrame{
 
 public static void main(String[] args) {
